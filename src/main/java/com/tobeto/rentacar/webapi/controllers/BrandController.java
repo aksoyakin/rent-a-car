@@ -5,6 +5,7 @@ import com.tobeto.rentacar.business.requests.create.brand.CreateBrandRequest;
 import com.tobeto.rentacar.business.responses.create.brand.CreateBrandResponse;
 import com.tobeto.rentacar.business.responses.get.brand.GetAllBrandResponse;
 import com.tobeto.rentacar.business.responses.get.brand.GetBrandResponse;
+import com.tobeto.rentacar.core.utilities.paging.PageDto;
 import com.tobeto.rentacar.core.utilities.results.DataResult;
 import com.tobeto.rentacar.entities.concretes.Brand;
 import lombok.AllArgsConstructor;
@@ -34,5 +35,16 @@ public class BrandController extends BaseController{
     @GetMapping(value = "getbyid/{id}")
     public GetBrandResponse getById(@PathVariable int id){
         return brandService.getById(id);
+    }
+
+    //pagination
+    @GetMapping("sort")
+    public ResponseEntity<?> getAllPage(@RequestBody PageDto pageDto){
+        return handleDataResult(brandService.getAllPage(pageDto));
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> delete(@PathVariable int id){
+        return handleResult(brandService.delete(id));
     }
 }
